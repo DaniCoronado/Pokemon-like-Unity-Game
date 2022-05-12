@@ -20,23 +20,28 @@ public class BattleSystem : MonoBehaviour
     int currentAction;
     int currentMove;
 
+    PokemonParty playerParty, enemyParty;
+    GameObject player, enemy;
+
     private void Start()
     {
+        player = GameObject.Find("Player");
+        enemy = GameObject.Find("Enemy");
+        playerParty = player.GetComponent<PokemonParty>();
+        enemyParty = enemy.GetComponent<PokemonParty>();
         StartCoroutine(SetupBattle());
     }
 
     public IEnumerator SetupBattle()
     {
-        
-        playerUnit.SetUp();
-        
-        enemyUnit.SetUp();
+        playerUnit.SetUp(playerParty.GetHealthyPokemon());
+        enemyUnit.SetUp(enemyParty.GetHealthyPokemon());
         playerHud.SetData(playerUnit.Pokemon);
         enemyHud.SetData(enemyUnit.Pokemon);
 
         dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
 
-        yield return dialogBox.TypeDialog($"A wild {enemyUnit.Pokemon._Base.Name} appeared.");
+        yield return dialogBox.TypeDialog($"A wild {enemyUnit.Pokemon.Base.Name} appeared.");
         yield return new WaitForSeconds(1f);
 
         PlayerAction();
@@ -61,16 +66,24 @@ public class BattleSystem : MonoBehaviour
         state = BattleState.Busy;
 
         var move = playerUnit.Pokemon.Moves[currentMove];
-        yield return dialogBox.TypeDialog($"{playerUnit.Pokemon._Base.Name} used {move.Base.Name}");
+        move.PP--;
+
+        yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} used {move.Base.Name}");
         yield return new WaitForSeconds(1f);
 
+        playerUnit.PlayAttackAnimation();
+        yield return new WaitForSeconds(1f);
+
+        enemyUnit.PlayHitAnimation();
+        
         DamageDetails damageDeatails = enemyUnit.Pokemon.TakeDamage(move, playerUnit.Pokemon);
         yield return enemyHud.UpdateHp();
         yield return ShowDamageDetails(damageDeatails);
         yield return new WaitForSeconds(1f);
         if (damageDeatails.Fainted)
         {
-            yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon._Base.Name} fainted");
+            yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon.Base.Name} fainted");
+            enemyUnit.PlayFaintAnimation();
         }
         else
         {
@@ -82,17 +95,24 @@ public class BattleSystem : MonoBehaviour
     {
         state = BattleState.EnemyMove;
         var move = enemyUnit.Pokemon.GetRandomMove();
+        move.PP--;
 
-        yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon._Base.Name} used {move.Base.Name}");
+        yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon.Base.Name} used {move.Base.Name}");
         yield return new WaitForSeconds(1f);
 
+        enemyUnit.PlayAttackAnimation();
+        yield return new WaitForSeconds(1f);
+
+        playerUnit.PlayHitAnimation();
+        
         DamageDetails damageDeatails = playerUnit.Pokemon.TakeDamage(move,enemyUnit.Pokemon);
         yield return playerHud.UpdateHp();
         yield return ShowDamageDetails(damageDeatails);
         yield return new WaitForSeconds(1f);
         if (damageDeatails.Fainted)
         {
-            yield return dialogBox.TypeDialog($"{playerUnit.Pokemon._Base.Name}fainted");
+            yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name}fainted");
+            playerUnit.PlayFaintAnimation();
         }
         else 
         {

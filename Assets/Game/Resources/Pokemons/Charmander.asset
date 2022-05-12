@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Charmander
   description: 
-  frontSprite: {fileID: 21300000, guid: 3ae032c1273a1d7478efd72769d614dd, type: 3}
-  backSprite: {fileID: 21300000, guid: 435385fa9e3b5e94fb3b365a20756be0, type: 3}
+  frontSprite: {fileID: 21300000, guid: cd259d9d4f8ba2749a16d1cc64d46bec, type: 3}
+  backSprite: {fileID: 21300000, guid: ed8e1d9976a1fd94d961840d8f6e7764, type: 3}
   type1: 2
   type2: 0
   maxHp: 39
@@ -25,5 +25,7 @@ MonoBehaviour:
   spDefense: 50
   speed: 65
   learneableMoves:
+  - moveBase: {fileID: 11400000, guid: 5294d22a3e99d384ebd53ac07d48e374, type: 2}
+    level: 7
   - moveBase: {fileID: 11400000, guid: 3c771a5d54dc7ce4f845cb1868ca926e, type: 2}
-    level: 0
+    level: 3
