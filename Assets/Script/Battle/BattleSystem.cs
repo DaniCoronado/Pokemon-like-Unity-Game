@@ -20,22 +20,15 @@ public class BattleSystem : MonoBehaviour
     int currentAction;
     int currentMove;
 
-    PokemonParty playerParty, enemyParty;
-    GameObject player, enemy;
-
     private void Start()
     {
-        player = GameObject.Find("Player");
-        enemy = GameObject.Find("Enemy");
-        playerParty = player.GetComponent<PokemonParty>();
-        enemyParty = enemy.GetComponent<PokemonParty>();
         StartCoroutine(SetupBattle());
     }
 
     public IEnumerator SetupBattle()
     {
-        playerUnit.SetUp(playerParty.GetHealthyPokemon());
-        enemyUnit.SetUp(enemyParty.GetHealthyPokemon());
+        playerUnit.SetUp();
+        enemyUnit.SetUp();
         playerHud.SetData(playerUnit.Pokemon);
         enemyHud.SetData(enemyUnit.Pokemon);
 

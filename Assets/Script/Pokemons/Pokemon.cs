@@ -8,23 +8,17 @@ public class Pokemon
     [SerializeField] PokemonBase _base;
     [SerializeField] int level;
 
-    public PokemonBase Base {
-        get{
-            return _base;
-        }
-    }
-    public int Level {
-        get{
-            return level;
-        }
-    }
+    public PokemonBase Base { get; set; }
+    public int Level { get; set; }
 
     public int HP { get; set; }
 
     public List<Move> Moves { get; set; }
 
-    public void Init()
+    public Pokemon(PokemonBase pBase, int plevel)
     {
+        Base = pBase;
+        Level = plevel;
         HP = MaxHp;
 
         //Generate Moves
