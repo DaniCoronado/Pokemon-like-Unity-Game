@@ -100,6 +100,37 @@ public class Pokemon
         int r = Random.Range(0, Moves.Count);
         return Moves[r];
     }
+
+    public Move SelectMove(Pokemon enemy){
+        
+        return Moves[GetMove(enemy,1)];
+    }
+
+    public int GetMove(Pokemon enemy,int turno)
+    {
+        int count = 10000000;
+        int sol = 0;
+        int n;
+        for (int i=0 ; i < Moves.Count ; i++){
+            Pokemon aux = enemy;
+            DamageDetails damage = aux.TakeDamage(Moves[i],this);
+            if (damage.Fainted == true){
+                n = turno;
+            }else{
+                n = aux.GetMove(this,turno + 1) * -1;
+            }
+            if (n > 0 && n < count){
+                count = n;
+                sol = i;
+            }
+        }
+
+        if (turno == 1){
+            return sol;
+        }else{
+            return count;
+        }
+    }
 }
 
 public class DamageDetails

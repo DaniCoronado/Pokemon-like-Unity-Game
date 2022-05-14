@@ -87,7 +87,7 @@ public class BattleSystem : MonoBehaviour
     IEnumerator EnemyMove()
     {
         state = BattleState.EnemyMove;
-        var move = enemyUnit.Pokemon.GetRandomMove();
+        var move = enemyUnit.Pokemon.SelectMove(enemyUnit.Pokemon);
         move.PP--;
 
         yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon.Base.Name} used {move.Base.Name}");
@@ -104,7 +104,7 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(1f);
         if (damageDeatails.Fainted)
         {
-            yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name}fainted");
+            yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} fainted");
             playerUnit.PlayFaintAnimation();
         }
         else 
@@ -113,6 +113,7 @@ public class BattleSystem : MonoBehaviour
         }
         
     }
+
     IEnumerator ShowDamageDetails(DamageDetails damageDetails)
     {
         if (damageDetails.Critical > 1f)
