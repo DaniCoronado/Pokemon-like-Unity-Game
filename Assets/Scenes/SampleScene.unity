@@ -1186,8 +1186,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b5ff9656593124f98cb32b42b86002, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _base: {fileID: 11400000, guid: 9f99ea188bf149440897cbb25aff6828, type: 2}
-  level: 7
+  _base: {fileID: 11400000, guid: 2f2e66da93a081342bf2f5d82339f09f, type: 2}
+  level: 50
   isPlayerUnit: 0
 --- !u!1 &651027928
 GameObject:
@@ -1989,8 +1989,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b5ff9656593124f98cb32b42b86002, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _base: {fileID: 11400000, guid: 3e10a483c2e09ed4cb65eaee0c615166, type: 2}
-  level: 2
+  _base: {fileID: 11400000, guid: 9f99ea188bf149440897cbb25aff6828, type: 2}
+  level: 50
   isPlayerUnit: 1
 --- !u!1 &1449855979
 GameObject:

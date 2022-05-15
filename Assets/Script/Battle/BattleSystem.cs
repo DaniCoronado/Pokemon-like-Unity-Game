@@ -87,7 +87,7 @@ public class BattleSystem : MonoBehaviour
     IEnumerator EnemyMove()
     {
         state = BattleState.EnemyMove;
-        var move = enemyUnit.Pokemon.SelectMove(enemyUnit.Pokemon);
+        var move = enemyUnit.Pokemon.SelectMove(playerUnit.Pokemon);
         move.PP--;
 
         yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon.Base.Name} used {move.Base.Name}");

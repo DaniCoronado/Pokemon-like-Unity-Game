@@ -95,6 +95,7 @@ public class Pokemon
         }
         return damageDetails;
     }
+
     public Move GetRandomMove()
     {
         int r = Random.Range(0, Moves.Count);
@@ -102,7 +103,6 @@ public class Pokemon
     }
 
     public Move SelectMove(Pokemon enemy){
-        
         return Moves[GetMove(enemy,1)];
     }
 
@@ -112,24 +112,36 @@ public class Pokemon
         int sol = 0;
         int n;
         for (int i=0 ; i < Moves.Count ; i++){
-            Pokemon aux = enemy;
-            DamageDetails damage = aux.TakeDamage(Moves[i],this);
-            if (damage.Fainted == true){
-                n = turno;
-            }else{
-                n = aux.GetMove(this,turno + 1) * -1;
-            }
-            if (n > 0 && n < count){
-                count = n;
-                sol = i;
+            
+            if(Moves[i].PP > 0){
+                Pokemon aux = enemy.Clone();
+                DamageDetails damage = aux.TakeDamage(Moves[i],this);
+                if (damage.Fainted == true){
+                    count = turno;
+                    sol = i;
+                    break;
+                }else{
+                    n = (aux.GetMove(this,turno + 1))* -1;
+                }
+                if (n > 0 && n < count){
+                    count = n;
+                    sol = i;
+                }
             }
         }
-
         if (turno == 1){
             return sol;
         }else{
             return count;
         }
+    }
+    public Pokemon Clone(){
+        Pokemon aux = new Pokemon(Base,Level);
+        aux.Base = Base;
+        aux.Level = Level;
+        aux.HP = HP;
+        aux.Moves = Moves;
+        return aux;
     }
 }
 
